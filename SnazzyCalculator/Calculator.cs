@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -11,6 +12,7 @@ namespace SnazzyCalculator
         
         public static List<string> Operators = new List<string> {"/", "+", "-", "*"};
         private static char[] _charOperators = getCharOperators();
+        private static IGui _gui;
 
         public static Dictionary<string, uint[]> ButtonPlacements =
             new Dictionary<string, uint[]>
@@ -36,18 +38,79 @@ namespace SnazzyCalculator
         public static void Main(string[] args)
         {
 #if OSX
-            CocoaSharp gui = new CocoaSharp();
+            _gui = new CocoaSharp();
 #elif LINUX
-            GtkSharp gui = new GtkSharp();
+            _gui = new GtkSharp();
 #endif
-            gui.PopulateWindow();
-            gui.ShowWindow();
+            _gui.PopulateWindow();
+            _gui.ShowWindow();
         }
 
         public static string Calculate(string equation)
         {
-            string[] numbers = equation.Split(_charOperators);
-            return "calculated";
+            string[] strNumbers = equation.Split(_charOperators);
+            Regex numberRegex = new Regex(@"\d");
+            Queue<double> values = new Queue<double>();
+            string curValue = String.Empty;
+            Queue<string> ops = new Queue<string>();
+
+            foreach (char c in equation)
+            {
+                string strChar = c.ToString();
+
+                if (numberRegex.Match(strChar).Success)
+                {
+                    curValue += strChar;
+                }
+                else if (Operators.Contains(strChar))
+                {
+                    // Once we hit an operator, add it to the list of operators
+                    // and store the current number in the list of values, then
+                    // wipe the curValue buffer
+                    ops.Enqueue(strChar);
+                    double value = Convert.ToDouble(curValue);
+                    values.Enqueue(value);
+                    curValue = String.Empty;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(curValue))
+            {
+                double value = Convert.ToDouble(curValue);
+                values.Enqueue(value);
+            }
+
+            double result = values.Dequeue();
+
+            while (values.Count > 0)
+            {
+                string op = ops.Dequeue();
+                double value = values.Dequeue();
+
+                if ("+" == op)
+                {
+                    result += value;
+                }
+                else if ("-" == op)
+                {
+                    result -= value;
+                }
+                else if ("*" == op)
+                {
+                    result *= value;
+                }
+                else if ("/" == op)
+                {
+                    result /= value;
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid operation; only " +
+                        string.Join(", ", Operators.ToArray()) + " are allowed");
+                }
+            }
+
+            return result.ToString();
         }
         
         public static bool HasFinalOperator(string text)
@@ -69,7 +132,7 @@ namespace SnazzyCalculator
         public static bool IsValidEquation(string equation)
         {
             bool result = false;
-            
+
             // Ensure the equation uses at least one operator
             foreach (string op in Operators)
             {
@@ -87,11 +150,25 @@ namespace SnazzyCalculator
                 return false;
             }
 
-            string joinedOps = string.Join("", Operators.ToArray());
-            string pattern = @"(\d+[" + joinedOps + "])+";
-            Regex valid = new Regex(pattern);
-            Match m = valid.Match(equation);
-            return m.Success;
+            string pattern = @"(\d+[\+\*\-\\])+\d+";
+            Regex valid = null;
+
+            try
+            {
+                valid = new Regex(pattern);
+            }
+            catch (System.ArgumentException ex)
+            {
+                _gui.DisplayMessage("Exception", ex.Message);
+            }
+
+            if (null != valid)
+            {
+                Match m = valid.Match(equation);
+                return m.Success;
+            }
+
+            return false;
         }
         
         public static string ReplaceFinalOperator(string text, char newOp)

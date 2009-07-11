@@ -5,7 +5,7 @@ using Gtk;
 
 namespace SnazzyCalculator
 {
-    public class GtkSharp
+    public class GtkSharp : IGui
     {
         private static TextView _textBox;
         private static TextBuffer _buffer;
@@ -19,13 +19,14 @@ namespace SnazzyCalculator
             _window.Resize(MainWindow.WIN_WIDTH, MainWindow.WIN_HEIGHT);
         }
 
-        public static void DisplayMessage(string title, string message)
+        public void DisplayMessage(string title, string message)
         {
-            Window win = new Window(title);
-            win.SetDefaultSize(300, 200);
-            Label label = new Label(message);
-            win.Add(label);
-            win.ShowAll();
+            Dialog dialog = new Dialog(title, _window, DialogFlags.DestroyWithParent);
+            dialog.Modal = true;
+            dialog.Add(new Label(message));
+            dialog.AddButton("OK", ResponseType.Close);
+            dialog.Run();
+            dialog.Destroy();
         }
 
         public void PopulateWindow()
@@ -41,7 +42,7 @@ namespace SnazzyCalculator
             Application.Run();
         }
 
-        private static Table getTable()
+        private Table getTable()
         {
             Table table = new Table(Calculator.NUM_ROWS, Calculator.NUM_COLS, false);
             _textBox = new TextView();
@@ -84,7 +85,7 @@ namespace SnazzyCalculator
             _buffer.Text += button.Label;
         }
         
-        private static void operatorButtonHandler(object obj, EventArgs args)
+        private void operatorButtonHandler(object obj, EventArgs args)
         {
             Button button = (Button)obj;
             char op = button.Label[0];
@@ -93,7 +94,7 @@ namespace SnazzyCalculator
             {
                 if (Calculator.IsValidEquation(_buffer.Text))
                 {
-                    _buffer.Text = Calculator.Calculate(_buffer.Text);
+                    _buffer.Text += Calculator.EXECUTE_OPERATOR + Calculator.Calculate(_buffer.Text);
                 }
                 else
                 {
