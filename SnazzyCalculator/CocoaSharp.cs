@@ -1,3 +1,4 @@
+#if OSX
 using System;
 using Cocoa;
 
@@ -15,3 +16,4 @@ namespace SnazzyCalculator
 		}
 	}
 }
+#endif

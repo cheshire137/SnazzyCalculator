@@ -1,3 +1,4 @@
+#if LINUX
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,26 +17,17 @@ namespace SnazzyCalculator
 			Window win = new Window(MainWindow.TITLE);
 			win.Resize(MainWindow.WIN_WIDTH, MainWindow.WIN_HEIGHT);
 			
-			Table table = new Table(Calculator.NUM_ROWS, Calculator.NUM_COLS, false);
-			uint rowIndex1 = 0;
-			uint colIndex1 = 0;
-			uint rowIndex2 = 1;
-			uint colIndex2 = Calculator.NUM_COLS;
+            Table table = new Table(Calculator.NUM_ROWS, Calculator.NUM_COLS, false);
 			_textBox = new Gtk.TextView();
 			_buffer = _textBox.Buffer;
 			_buffer.Text = "";
 			
-			table.Attach(_textBox, colIndex1, colIndex2, rowIndex1, rowIndex2);
-			rowIndex1++;
-			rowIndex2++;
-			colIndex2 = 1;
+			uint col1 = 0, row1 = 0, col2 = Calculator.NUM_COLS, row2 = 1;
+            table.Attach(_textBox, col1, col2, row1, row2);
 			
-			Dictionary<string, uint[]> buttonPlacements = Calculator.GetButtonPlacements(
-				rowIndex1, colIndex1, rowIndex2, colIndex2
-			);
-			
-			foreach (string num in Calculator.NumPad)
+			foreach (KeyValuePair<string, uint[]> pair in Calculator.ButtonPlacements)
 			{
+                string num = pair.Key;
 				Button button = new Button(num);
 				
 				if (Calculator.Operators.Contains(num))
@@ -47,10 +39,14 @@ namespace SnazzyCalculator
 					button.Clicked += new EventHandler(numButtonHandler);
 				}
 				
-				uint[] placement = buttonPlacements[num];
-				
+				uint[] placement = pair.Value;
+                col1 = placement[0];
+                row1 = placement[1];
+                col2 = placement[2];
+                row2 = placement[3];
+                
 				// Put the button in the table
-				table.Attach(button, placement[0], placement[1], placement[2], placement[3]);
+				table.Attach(button, col1, col2, row1, row2);
 			}
 			
 			table.ShowAll();
@@ -72,7 +68,7 @@ namespace SnazzyCalculator
 			
 			if (Calculator.HasFinalOperator(_buffer.Text))
 			{
-				Calculator.ReplaceFinalOperator(_buffer.Text, op);
+				_buffer.Text = Calculator.ReplaceFinalOperator(_buffer.Text, op);
 			}
 			else
 			{
@@ -81,3 +77,4 @@ namespace SnazzyCalculator
 		}
 	}
 }
+#endif

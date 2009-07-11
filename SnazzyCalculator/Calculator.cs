@@ -5,19 +5,39 @@ namespace SnazzyCalculator
 {
 	class Calculator
 	{
-		public const uint NUM_ROWS = 5;
-		public const uint NUM_COLS = 3;
+		public const uint NUM_ROWS = 6;
+		public const uint NUM_COLS = 4;
 		
-		public static List<string> Operators = new List<string> {"/", "+", "-", "*" };
-		public static string[] NumPad = new[]
+		public static List<string> Operators = new List<string> {"/", "+", "-", "*"};
+		/*public static string[] NumPad = new[]
 										 {
-											 "/", "*", "-",
-										 	 "7", "8", "9",
-											 "4", "5", "6",
-											 "1", "2", "3",
-											 "0", "."
-										 };
-		
+											 "/", "*", "-", "+", // rowIndex 0-1
+										 	 "7", "8", "9",      // rowIndex 1-2
+											 "4", "5", "6", "=", // rowIndex 2-3
+											 "1", "2", "3",      // rowIndex 3-4
+											 "0", "."            // rowIndex 4-5
+										 };*/
+        public static Dictionary<string, uint[]> ButtonPlacements =
+            new Dictionary<string, uint[]>
+                {
+                    {"/", new uint[] {0, 1, 2, 2}},
+                    {"*", new uint[] {2, 1, 3, 2}},
+                    {"-", new uint[] {3, 1, 4, 2}},
+                    {"7", new uint[] {0, 2, 1, 3}},
+                    {"8", new uint[] {1, 2, 2, 3}},
+                    {"9", new uint[] {2, 2, 3, 3}},
+                    {"+", new uint[] {3, 2, 4, 4}},
+                    {"4", new uint[] {0, 3, 1, 4}},
+                    {"5", new uint[] {1, 3, 2, 4}},
+                    {"6", new uint[] {2, 3, 3, 4}},
+                    {"1", new uint[] {0, 4, 1, 5}},
+                    {"2", new uint[] {1, 4, 2, 5}},
+                    {"3", new uint[] {2, 4, 3, 5}},
+                    {"=", new uint[] {3, 4, 4, 6}},
+                    {"0", new uint[] {0, 5, 2, 6}},
+                    {".", new uint[] {2, 5, 3, 6}}
+                };
+        
 		public static void Main(string[] args)
 		{
 #if OSX
@@ -27,7 +47,7 @@ namespace SnazzyCalculator
 #endif
 		}
 		
-		public static Dictionary<string, uint[]> GetButtonPlacements(
+		/*public static Dictionary<string, uint[]> GetButtonPlacements(
 			uint rowIndex1, uint colIndex1, uint rowIndex2, uint colIndex2
 		)
 		{
@@ -36,6 +56,12 @@ namespace SnazzyCalculator
 
 			foreach (string num in NumPad)
 			{
+                // Handle tall plus button
+                if (0 == rowIndex1 && 3 == colIndex1)
+                {
+                    rowIndex2++;
+                }
+                
 				// Make the penultimate button stretch 2 spaces--it's the zero
 				if (count == NumPad.Length - 1)
 				{
@@ -47,6 +73,12 @@ namespace SnazzyCalculator
 				colIndex1++;
 				colIndex2++;
 				
+                // Handle tall plus button
+                if (0 == rowIndex1 && 3 == colIndex1)
+                {
+                    rowIndex1++;
+                }
+                
 				// Handle the period
 				if (count == NumPad.Length - 1)
 				{
@@ -67,7 +99,7 @@ namespace SnazzyCalculator
 			}
 			
 			return output;
-		}
+		}*/
 		
 		public static bool HasFinalOperator(string text)
 		{
@@ -92,11 +124,11 @@ namespace SnazzyCalculator
 			
 			foreach (string op in Operators)
 			{
-				ops[index] = op.ToCharArray(0, 1)[0];
+				ops[index] = op[0];
 				index++;
 			}
 			
-			char oldOp = text[text.LastIndexOfAny(ops)];
+			return text.TrimEnd(ops) + newOp;
 		}
 	}
 }

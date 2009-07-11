@@ -17,11 +17,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <AssemblyName>SnazzyCalculator</AssemblyName>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="AfterBuild" command="macpack -m:2 -n:SnazzyCalculator -o:. -a:bin/Debug/SnazzyCalculator.exe -r:snazzy_calculator.nib" workingdir="${TargetDir}" externalConsole="true" pauseExternalConsole="true" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -67,7 +62,6 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Posix" />
-    <Reference Include="cocoa-sharp, Version=1.9.0.0, Culture=neutral, PublicKeyToken=a2b5f5c17ce02f1d" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
