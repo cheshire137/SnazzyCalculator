@@ -19,6 +19,15 @@ namespace SnazzyCalculator
             _window.Resize(MainWindow.WIN_WIDTH, MainWindow.WIN_HEIGHT);
         }
 
+        public static void DisplayMessage(string title, string message)
+        {
+            Window win = new Window(title);
+            win.SetDefaultSize(300, 200);
+            Label label = new Label(message);
+            win.Add(label);
+            win.ShowAll();
+        }
+
         public void PopulateWindow()
         {
             _table = getTable();
@@ -47,7 +56,7 @@ namespace SnazzyCalculator
                 string num = pair.Key;
                 Button button = new Button(num);
 
-                if (Calculator.Operators.Contains(num))
+                if (Calculator.Operators.Contains(num) || Calculator.EXECUTE_OPERATOR == num[0])
                 {
                     button.Clicked += operatorButtonHandler;
                 }
@@ -78,9 +87,20 @@ namespace SnazzyCalculator
         private static void operatorButtonHandler(object obj, EventArgs args)
         {
             Button button = (Button)obj;
-            string op = button.Label;
+            char op = button.Label[0];
             
-            if (Calculator.HasFinalOperator(_buffer.Text))
+            if (Calculator.EXECUTE_OPERATOR == op)
+            {
+                if (Calculator.IsValidEquation(_buffer.Text))
+                {
+                    _buffer.Text = Calculator.Calculate(_buffer.Text);
+                }
+                else
+                {
+                    DisplayMessage("Error", "Invalid equation " + _buffer.Text);
+                }
+            }
+            else if (Calculator.HasFinalOperator(_buffer.Text))
             {
                 _buffer.Text = Calculator.ReplaceFinalOperator(_buffer.Text, op);
             }

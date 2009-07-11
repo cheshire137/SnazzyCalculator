@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SnazzyCalculator
 {
@@ -6,8 +7,10 @@ namespace SnazzyCalculator
     {
         public const uint NUM_ROWS = 6;
         public const uint NUM_COLS = 4;
+        public const char EXECUTE_OPERATOR = '=';
         
         public static List<string> Operators = new List<string> {"/", "+", "-", "*"};
+        private static char[] _charOperators = getCharOperators();
 
         public static Dictionary<string, uint[]> ButtonPlacements =
             new Dictionary<string, uint[]>
@@ -40,6 +43,12 @@ namespace SnazzyCalculator
             gui.PopulateWindow();
             gui.ShowWindow();
         }
+
+        public static string Calculate(string equation)
+        {
+            string[] numbers = equation.Split(_charOperators);
+            return "calculated";
+        }
         
         public static bool HasFinalOperator(string text)
         {
@@ -56,19 +65,52 @@ namespace SnazzyCalculator
             
             return result;
         }
+
+        public static bool IsValidEquation(string equation)
+        {
+            bool result = false;
+            
+            // Ensure the equation uses at least one operator
+            foreach (string op in Operators)
+            {
+                result = result || equation.Contains(op);
+
+                if (result)
+                {
+                    break;
+                }
+            }
+
+            // If no operators were found, return false now--invalid equation
+            if (!result)
+            {
+                return false;
+            }
+
+            string joinedOps = string.Join("", Operators.ToArray());
+            string pattern = @"(\d+[" + joinedOps + "])+";
+            Regex valid = new Regex(pattern);
+            Match m = valid.Match(equation);
+            return m.Success;
+        }
         
-        public static string ReplaceFinalOperator(string text, string newOp)
+        public static string ReplaceFinalOperator(string text, char newOp)
+        {
+            return text.TrimEnd(_charOperators) + newOp;
+        }
+
+        private static char[] getCharOperators()
         {
             char[] ops = new char[Operators.Count];
             int index = 0;
-            
+
             foreach (string op in Operators)
             {
                 ops[index] = op[0];
                 index++;
             }
-            
-            return text.TrimEnd(ops) + newOp;
+
+            return ops;
         }
     }
 }
