@@ -5,3 +5,10 @@ bin
 .svn
 *.app
 *.pidb
+*.suo
+*.user
+Backup
+obj
+UpgradeLog.XML
+_ReSharper.*
+_UpgradeReport_Files
