@@ -1,0 +1,7 @@
+*.userprefs
+*.usertasks
+bin
+*.swp
+.svn
+*.app
+*.pidb
