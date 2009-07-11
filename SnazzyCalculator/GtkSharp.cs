@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 
 namespace SnazzyCalculator
@@ -7,6 +8,7 @@ namespace SnazzyCalculator
 	public class GtkSharp
 	{
 		private static Gtk.TextView _textBox;
+		private static Gtk.TextBuffer _buffer;
 		
 		public GtkSharp()
 		{
@@ -20,7 +22,8 @@ namespace SnazzyCalculator
 			uint rowIndex2 = 1;
 			uint colIndex2 = Calculator.NUM_COLS;
 			_textBox = new Gtk.TextView();
-			_textBox.Buffer.Text = "Hello";
+			_buffer = _textBox.Buffer;
+			_buffer.Text = "";
 			
 			table.Attach(_textBox, colIndex1, colIndex2, rowIndex1, rowIndex2);
 			rowIndex1++;
@@ -31,10 +34,19 @@ namespace SnazzyCalculator
 				rowIndex1, colIndex1, rowIndex2, colIndex2
 			);
 			
-			foreach (string num in Calculator.NUM_PAD)
+			foreach (string num in Calculator.NumPad)
 			{
 				Button button = new Button(num);
-				button.Clicked += new EventHandler(numButtonHandler);
+				
+				if (Calculator.Operators.Contains(num))
+				{
+					button.Clicked += new EventHandler(operatorButtonHandler);
+				}
+				else
+				{
+					button.Clicked += new EventHandler(numButtonHandler);
+				}
+				
 				uint[] placement = buttonPlacements[num];
 				
 				// Put the button in the table
@@ -50,7 +62,22 @@ namespace SnazzyCalculator
 		static void numButtonHandler(object obj, EventArgs args)
 		{
 			Button button = (Button)obj;
-			_textBox.Buffer.Text = (string)button.Label;
+			_buffer.Text += (string)button.Label;
+		}
+		
+		static void operatorButtonHandler(object obj, EventArgs args)
+		{
+			Button button = (Button)obj;
+			string op = (string)button.Label;
+			
+			if (Calculator.HasFinalOperator(_buffer.Text))
+			{
+				Calculator.ReplaceFinalOperator(_buffer.Text, op);
+			}
+			else
+			{
+				_buffer.Text += op;
+			}
 		}
 	}
 }

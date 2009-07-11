@@ -7,7 +7,9 @@ namespace SnazzyCalculator
 	{
 		public const uint NUM_ROWS = 5;
 		public const uint NUM_COLS = 3;
-		public static string[] NUM_PAD = new[]
+		
+		public static List<string> Operators = new List<string> {"/", "+", "-", "*" };
+		public static string[] NumPad = new[]
 										 {
 											 "/", "*", "-",
 										 	 "7", "8", "9",
@@ -32,10 +34,10 @@ namespace SnazzyCalculator
 			Dictionary<string, uint[]> output = new Dictionary<string, uint[]>();
 			int count = 1;
 
-			foreach (string num in NUM_PAD)
+			foreach (string num in NumPad)
 			{
 				// Make the penultimate button stretch 2 spaces--it's the zero
-				if (count == NUM_PAD.Length - 1)
+				if (count == NumPad.Length - 1)
 				{
 					colIndex2 = NUM_COLS - 1;
 				}
@@ -46,7 +48,7 @@ namespace SnazzyCalculator
 				colIndex2++;
 				
 				// Handle the period
-				if (count == NUM_PAD.Length - 1)
+				if (count == NumPad.Length - 1)
 				{
 					colIndex1 = NUM_COLS - 1;
 					colIndex2 = NUM_COLS;
@@ -65,6 +67,36 @@ namespace SnazzyCalculator
 			}
 			
 			return output;
+		}
+		
+		public static bool HasFinalOperator(string text)
+		{
+			bool result = false;
+			
+			foreach (string op in Operators)
+			{
+				if (text.EndsWith(op))
+				{
+					result = true;
+					break;
+				}
+			}
+			
+			return result;
+		}
+		
+		public static string ReplaceFinalOperator(string text, string newOp)
+		{
+			char[] ops = new char[Operators.Count];
+			int index = 0;
+			
+			foreach (string op in Operators)
+			{
+				ops[index] = op.ToCharArray(0, 1)[0];
+				index++;
+			}
+			
+			char oldOp = text[text.LastIndexOfAny(ops)];
 		}
 	}
 }
