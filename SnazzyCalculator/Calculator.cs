@@ -90,7 +90,7 @@ namespace SnazzyCalculator
                 return false;
             }
 
-            string pattern = @"(\d+[\+\*\-\\])+\d+";
+            string pattern = @"(\d+[\+\*-\\])+\d+";
             Regex valid = null;
 
             try
@@ -99,7 +99,7 @@ namespace SnazzyCalculator
             }
             catch (System.ArgumentException ex)
             {
-                _gui.DisplayMessage("Exception", ex.Message);
+                _gui.DisplayMessage(NotificationType.Error, ex.Message);
             }
 
             if (null != valid)
