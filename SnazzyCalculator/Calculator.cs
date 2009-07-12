@@ -46,71 +46,11 @@ namespace SnazzyCalculator
             _gui.ShowWindow();
         }
 
-        public static string Calculate(string equation)
+        public static string Calculate(string strEquation)
         {
-            string[] strNumbers = equation.Split(_charOperators);
-            Regex numberRegex = new Regex(@"\d");
-            Queue<double> values = new Queue<double>();
-            string curValue = String.Empty;
-            Queue<string> ops = new Queue<string>();
-
-            foreach (char c in equation)
-            {
-                string strChar = c.ToString();
-
-                if (numberRegex.Match(strChar).Success)
-                {
-                    curValue += strChar;
-                }
-                else if (Operators.Contains(strChar))
-                {
-                    // Once we hit an operator, add it to the list of operators
-                    // and store the current number in the list of values, then
-                    // wipe the curValue buffer
-                    ops.Enqueue(strChar);
-                    double value = Convert.ToDouble(curValue);
-                    values.Enqueue(value);
-                    curValue = String.Empty;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(curValue))
-            {
-                double value = Convert.ToDouble(curValue);
-                values.Enqueue(value);
-            }
-
-            double result = values.Dequeue();
-
-            while (values.Count > 0)
-            {
-                string op = ops.Dequeue();
-                double value = values.Dequeue();
-
-                if ("+" == op)
-                {
-                    result += value;
-                }
-                else if ("-" == op)
-                {
-                    result -= value;
-                }
-                else if ("*" == op)
-                {
-                    result *= value;
-                }
-                else if ("/" == op)
-                {
-                    result /= value;
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid operation; only " +
-                        string.Join(", ", Operators.ToArray()) + " are allowed");
-                }
-            }
-
-            return result.ToString();
+            Equation equation = new Equation(strEquation);
+            equation.Parse();
+            return equation.Solve().ToString();
         }
         
         public static bool HasFinalOperator(string text)
