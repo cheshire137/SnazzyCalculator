@@ -81,15 +81,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Equation.cs" />
     <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="IGui.cs" />
     <Compile Include="MainWindow.cs" />
     <Compile Include="gtk-gui\MainWindow.cs" />
-    <Compile Include="Calculator.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="GtkSharp.cs" />
-    <Compile Include="CocoaSharp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gui\Gui.csproj">
+      <Project>{0F249BAA-36F1-48F4-BD27-6B04F27152EE}</Project>
+      <Name>Gui</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

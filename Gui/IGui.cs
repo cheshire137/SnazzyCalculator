@@ -1,4 +1,4 @@
-﻿namespace SnazzyCalculator
+﻿namespace Gui
 {
 	public enum NotificationType
 	{

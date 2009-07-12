@@ -2,9 +2,9 @@
 using System;
 using Cocoa;
 
-namespace SnazzyCalculator
+namespace Gui
 {
-	public class CocoaSharp
+	public class CocoaSharp : IGui
 	{
 		private const string NIB_FILE = "snazzy_calculator.nib";
 		

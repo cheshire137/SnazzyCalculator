@@ -1,12 +1,22 @@
 using Gtk;
+using Gui;
 
-public partial class MainWindow: Gtk.Window
-{	
-    public const int WIN_WIDTH = 640;
-    public const int WIN_HEIGHT = 480;
-    public const string TITLE = "Snazzy Calculator";
-    
-    public MainWindow(): base (Gtk.WindowType.Toplevel)
+public partial class MainWindow: Window
+{
+    private static IGui _gui;
+
+    public static void Main(string[] args)
+    {
+#if OSX
+        _gui = new CocoaSharp();
+#elif LINUX
+        _gui = new Gui.GtkSharp();
+#endif
+        _gui.PopulateWindow();
+        _gui.ShowWindow();
+    }
+
+    public MainWindow(): base (WindowType.Toplevel)
     {
         Build();
     }
