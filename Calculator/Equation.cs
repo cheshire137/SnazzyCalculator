@@ -11,6 +11,7 @@ namespace Calculator
 	    private readonly Queue<string> _operators;
 
         public const char EXECUTE_OPERATOR = '=';
+	    public const char CLEAR_OPERATOR = 'C';
         public static List<string> Operators = new List<string> { "/", "+", "-", "*" };
         public static readonly char[] CharOperators = getCharOperators();
         

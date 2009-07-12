@@ -62,18 +62,25 @@ namespace Gui
             _buffer = _textBox.Buffer;
             _buffer.Text = "";
 
-            uint col1 = 0, row1 = 0, col2 = GuiData.NUM_COLS, row2 = 1;
+            uint col1 = 0, row1 = 0, col2 = GuiData.NUM_COLS - 1, row2 = 1;
             table.Attach(_textBox, col1, col2, row1, row2);
 
             foreach (KeyValuePair<string, uint[]> pair in GuiData.ButtonPlacements)
             {
-                string num = pair.Key;
-                Button button = new Button(num);
+                string numOrOp = pair.Key;
+                Button button = new Button(numOrOp);
 
-                if (Equation.Operators.Contains(num) || Equation.EXECUTE_OPERATOR == num[0])
+                // Clear
+                if (Equation.CLEAR_OPERATOR == numOrOp[0])
+                {
+                    button.Clicked += clearButtonHandler;
+                }
+                // Math or execute operators
+                else if (Equation.Operators.Contains(numOrOp) || Equation.EXECUTE_OPERATOR == numOrOp[0])
                 {
                     button.Clicked += operatorButtonHandler;
                 }
+                // Numbers
                 else
                 {
                     button.Clicked += numButtonHandler;
@@ -90,6 +97,11 @@ namespace Gui
             }
 
             return table;
+        }
+
+        private static void clearButtonHandler(object obj, EventArgs args)
+        {
+            _buffer.Text = String.Empty;
         }
         
         private static void numButtonHandler(object obj, EventArgs args)

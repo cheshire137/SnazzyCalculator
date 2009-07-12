@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Calculator;
 
 namespace Gui
 {
@@ -13,6 +14,7 @@ namespace Gui
         public static Dictionary<string, uint[]> ButtonPlacements =
             new Dictionary<string, uint[]>
                 {
+                    {Equation.CLEAR_OPERATOR.ToString(), new uint[] {3, 0, 4, 1}},
                     {"/", new uint[] {0, 1, 2, 2}},
                     {"*", new uint[] {2, 1, 3, 2}},
                     {"-", new uint[] {3, 1, 4, 2}},
@@ -26,7 +28,7 @@ namespace Gui
                     {"1", new uint[] {0, 4, 1, 5}},
                     {"2", new uint[] {1, 4, 2, 5}},
                     {"3", new uint[] {2, 4, 3, 5}},
-                    {"=", new uint[] {3, 4, 4, 6}},
+                    {Equation.EXECUTE_OPERATOR.ToString(), new uint[] {3, 4, 4, 6}},
                     {"0", new uint[] {0, 5, 2, 6}},
                     {".", new uint[] {2, 5, 3, 6}}
                 };
