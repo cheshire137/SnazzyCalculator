@@ -68,15 +68,16 @@ namespace Gui
             foreach (KeyValuePair<string, uint[]> pair in GuiData.ButtonPlacements)
             {
                 string numOrOp = pair.Key;
+				char c = numOrOp[0];
                 Button button = new Button(numOrOp);
 
                 // Clear
-                if (Equation.CLEAR_OPERATOR == numOrOp[0])
+                if (Equation.CLEAR_OPERATOR == c)
                 {
                     button.Clicked += clearButtonHandler;
                 }
                 // Math or execute operators
-                else if (Equation.Operators.Contains(numOrOp) || Equation.EXECUTE_OPERATOR == numOrOp[0])
+                else if (Equation.Operators.Contains(c) || Equation.EXECUTE_OPERATOR == c)
                 {
                     button.Clicked += operatorButtonHandler;
                 }

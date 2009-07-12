@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Calculator
 {
@@ -12,8 +13,7 @@ namespace Calculator
 
         public const char EXECUTE_OPERATOR = '=';
 	    public const char CLEAR_OPERATOR = 'C';
-        public static List<string> Operators = new List<string> { "/", "+", "-", "*" };
-        public static readonly char[] CharOperators = getCharOperators();
+        public static List<char> Operators = new List<char> { '/', '+', '-', '*' };
         
         public Equation(string equation)
         {
@@ -26,9 +26,9 @@ namespace Calculator
         {
             bool result = false;
 
-            foreach (string op in Operators)
+            foreach (char op in Operators)
             {
-                if (_equation.EndsWith(op))
+                if (_equation.EndsWith(op.ToString()))
                 {
                     result = true;
                     break;
@@ -43,9 +43,9 @@ namespace Calculator
             bool result = false;
 
             // Ensure the equation uses at least one operator
-            foreach (string op in Operators)
+            foreach (char op in Operators)
             {
-                result = result || _equation.Contains(op);
+                result = result || _equation.Contains(op.ToString());
 
                 if (result)
                 {
@@ -67,7 +67,7 @@ namespace Calculator
 
         public string ReplaceFinalOperator(char newOp)
         {
-            return _equation.TrimEnd(CharOperators) + newOp;
+            return _equation.TrimEnd(Operators.ToArray()) + newOp;
         }
 
         public double Solve()
@@ -99,8 +99,9 @@ namespace Calculator
                 }
                 else
                 {
+					string[] validOps = Operators.Select(curOp => curOp.ToString()).ToArray();
                     throw new ArgumentException("Invalid operation; only " +
-                        string.Join(", ", Operators.ToArray()) + " are allowed");
+                        string.Join(", ", validOps) + " are allowed");
                 }
 
                 result = operation.Invoke(result, value);
@@ -129,20 +130,6 @@ namespace Calculator
             return dividend / divisor;
         }
 
-        private static char[] getCharOperators()
-        {
-            char[] ops = new char[Operators.Count];
-            int index = 0;
-
-            foreach (string op in Operators)
-            {
-                ops[index] = op[0];
-                index++;
-            }
-
-            return ops;
-        }
-
         private static double multiply(double factor1, double factor2)
         {
             return factor1 * factor2;
@@ -161,7 +148,7 @@ namespace Calculator
                 {
                     curValue += strChar;
                 }
-                else if (Operators.Contains(strChar))
+                else if (Operators.Contains(c))
                 {
                     // Once we hit an operator, add it to the list of operators
                     // and store the current number in the list of values, then
