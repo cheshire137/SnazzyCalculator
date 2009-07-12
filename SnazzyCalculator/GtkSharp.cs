@@ -19,11 +19,11 @@ namespace SnazzyCalculator
             _window.Resize(MainWindow.WIN_WIDTH, MainWindow.WIN_HEIGHT);
         }
 
-        public void DisplayMessage(NotificationType notType, string message)
+        public void DisplayMessage(NotificationType notifyType, string message)
         {
 			MessageType mesType;
 			
-			if (NotificationType.Error == notType)
+			if (NotificationType.Error == notifyType)
 			{
 				mesType = MessageType.Error;
 			}
