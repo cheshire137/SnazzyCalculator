@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnazzyCalculator", "SnazzyCalculator\SnazzyCalculator.csproj", "{DF21F286-8A26-492B-9FB5-6D41A73E602A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui", "Gui\Gui.csproj", "{0F249BAA-36F1-48F4-BD27-6B04F27152EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "Calculator\Calculator.csproj", "{35F7CA0D-1F9D-414E-9FB8-003644315C9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{DF21F286-8A26-492B-9FB5-6D41A73E602A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF21F286-8A26-492B-9FB5-6D41A73E602A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF21F286-8A26-492B-9FB5-6D41A73E602A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F249BAA-36F1-48F4-BD27-6B04F27152EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F249BAA-36F1-48F4-BD27-6B04F27152EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F249BAA-36F1-48F4-BD27-6B04F27152EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F249BAA-36F1-48F4-BD27-6B04F27152EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35F7CA0D-1F9D-414E-9FB8-003644315C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F7CA0D-1F9D-414E-9FB8-003644315C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F7CA0D-1F9D-414E-9FB8-003644315C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F7CA0D-1F9D-414E-9FB8-003644315C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

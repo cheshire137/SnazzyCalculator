@@ -1,9 +1,10 @@
 #if LINUX
 using System;
 using System.Collections.Generic;
+using Calculator;
 using Gtk;
 
-namespace SnazzyCalculator
+namespace Gui
 {
     public class GtkSharp : IGui
     {
@@ -15,8 +16,8 @@ namespace SnazzyCalculator
         public GtkSharp()
         {
             Application.Init();
-            _window = new Window(MainWindow.TITLE);
-            _window.Resize(MainWindow.WIN_WIDTH, MainWindow.WIN_HEIGHT);
+            _window = new Window(GuiData.TITLE);
+            _window.Resize(GuiData.WIN_WIDTH, GuiData.WIN_HEIGHT);
         }
 
         public void DisplayMessage(NotificationType notifyType, string message)
@@ -56,23 +57,30 @@ namespace SnazzyCalculator
 
         private Table getTable()
         {
-            Table table = new Table(Calculator.NUM_ROWS, Calculator.NUM_COLS, false);
+            Table table = new Table(GuiData.NUM_ROWS, GuiData.NUM_COLS, false);
             _textBox = new TextView();
             _buffer = _textBox.Buffer;
             _buffer.Text = "";
 
-            uint col1 = 0, row1 = 0, col2 = Calculator.NUM_COLS, row2 = 1;
+            uint col1 = 0, row1 = 0, col2 = GuiData.NUM_COLS - 1, row2 = 1;
             table.Attach(_textBox, col1, col2, row1, row2);
 
-            foreach (KeyValuePair<string, uint[]> pair in Calculator.ButtonPlacements)
+            foreach (KeyValuePair<string, uint[]> pair in GuiData.ButtonPlacements)
             {
-                string num = pair.Key;
-                Button button = new Button(num);
+                string numOrOp = pair.Key;
+                Button button = new Button(numOrOp);
 
-                if (Calculator.Operators.Contains(num) || Calculator.EXECUTE_OPERATOR == num[0])
+                // Clear
+                if (Equation.CLEAR_OPERATOR == numOrOp[0])
+                {
+                    button.Clicked += clearButtonHandler;
+                }
+                // Math or execute operators
+                else if (Equation.Operators.Contains(numOrOp) || Equation.EXECUTE_OPERATOR == numOrOp[0])
                 {
                     button.Clicked += operatorButtonHandler;
                 }
+                // Numbers
                 else
                 {
                     button.Clicked += numButtonHandler;
@@ -90,6 +98,11 @@ namespace SnazzyCalculator
 
             return table;
         }
+
+        private static void clearButtonHandler(object obj, EventArgs args)
+        {
+            _buffer.Text = String.Empty;
+        }
         
         private static void numButtonHandler(object obj, EventArgs args)
         {
@@ -101,13 +114,14 @@ namespace SnazzyCalculator
         {
             Button button = (Button)obj;
             char op = button.Label[0];
-            
-            if (Calculator.EXECUTE_OPERATOR == op)
+            Equation eq = new Equation(_buffer.Text);
+
+            if (Equation.EXECUTE_OPERATOR == op)
             {
-                if (Calculator.IsValidEquation(_buffer.Text))
+                if (eq.IsValid())
                 {
-                    _buffer.Text += Calculator.EXECUTE_OPERATOR +
-						Calculator.Calculate(_buffer.Text);
+                    double result = eq.Solve();
+                    _buffer.Text += Equation.EXECUTE_OPERATOR + result.ToString();
                 }
                 else
                 {
@@ -115,9 +129,9 @@ namespace SnazzyCalculator
 					               "Invalid equation " + _buffer.Text);
                 }
             }
-            else if (Calculator.HasFinalOperator(_buffer.Text))
+            else if (eq.HasFinalOperator())
             {
-                _buffer.Text = Calculator.ReplaceFinalOperator(_buffer.Text, op);
+                _buffer.Text = eq.ReplaceFinalOperator(op);
             }
             else
             {
