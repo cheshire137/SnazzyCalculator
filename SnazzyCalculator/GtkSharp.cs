@@ -19,14 +19,26 @@ namespace SnazzyCalculator
             _window.Resize(MainWindow.WIN_WIDTH, MainWindow.WIN_HEIGHT);
         }
 
-        public void DisplayMessage(string title, string message)
+        public void DisplayMessage(NotificationType notType, string message)
         {
-            Dialog dialog = new Dialog(title, _window, DialogFlags.DestroyWithParent);
-            dialog.Modal = true;
-            dialog.Add(new Label(message));
-            dialog.AddButton("OK", ResponseType.Close);
-            dialog.Run();
-            dialog.Destroy();
+			MessageType mesType;
+			
+			if (NotificationType.Error == notType)
+			{
+				mesType = MessageType.Error;
+			}
+			else
+			{
+				mesType = MessageType.Info;
+			}
+			
+			MessageDialog dialog = new MessageDialog(_window,
+			                                         DialogFlags.DestroyWithParent,
+			                                         mesType,
+			                                         ButtonsType.Close,
+			                                         message);
+			dialog.Run();
+			dialog.Destroy();
         }
 
         public void PopulateWindow()
@@ -94,11 +106,13 @@ namespace SnazzyCalculator
             {
                 if (Calculator.IsValidEquation(_buffer.Text))
                 {
-                    _buffer.Text += Calculator.EXECUTE_OPERATOR + Calculator.Calculate(_buffer.Text);
+                    _buffer.Text += Calculator.EXECUTE_OPERATOR +
+						Calculator.Calculate(_buffer.Text);
                 }
                 else
                 {
-                    DisplayMessage("Error", "Invalid equation " + _buffer.Text);
+                    DisplayMessage(NotificationType.Error,
+					               "Invalid equation " + _buffer.Text);
                 }
             }
             else if (Calculator.HasFinalOperator(_buffer.Text))
