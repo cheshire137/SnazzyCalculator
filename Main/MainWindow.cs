@@ -3,7 +3,9 @@ using Gtk;
 using Calculator;
 
 public partial class MainWindow : Gtk.Window
-{	
+{
+	private const string ERROR_MESSAGE = "ERROR";
+	
 	public MainWindow() : base (Gtk.WindowType.Toplevel)
 	{
 		Build();
@@ -97,10 +99,24 @@ public partial class MainWindow : Gtk.Window
 		{
 			equationTextView.Buffer.Text = "" + eq.Solve();
 		}
+		else
+		{
+			equationTextView.Buffer.Text = ERROR_MESSAGE;
+		}
+	}
+
+	protected void OnButtonClearClicked(object sender, System.EventArgs e)
+	{
+		equationTextView.Buffer.Text = "0";
 	}
 	
 	private void operatorButtonClicked(char op)
 	{
+		if (ERROR_MESSAGE.Equals(equationTextView.Buffer.Text))
+		{
+			equationTextView.Buffer.Text = "0" + op;
+			return;
+		}
 		var eq = new Equation(equationTextView.Buffer.Text);
 		if (eq.HasFinalOperator()) {
 			equationTextView.Buffer.Text = eq.ReplaceFinalOperator(op);
@@ -113,7 +129,9 @@ public partial class MainWindow : Gtk.Window
 	
 	private void numberButtonClicked(int number)
 	{
-		if ("0".Equals(equationTextView.Buffer.Text)) {
+		string curEquation = equationTextView.Buffer.Text;
+		if ("0".Equals(curEquation) ||
+		    	ERROR_MESSAGE.Equals(curEquation)) {
 			equationTextView.Buffer.Text = "" + number;
 			return;
 		}
