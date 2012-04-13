@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Calculator;
 using Gtk;
 
-namespace Gui
+namespace Main
 {
     public class GtkSharp : IGui
     {

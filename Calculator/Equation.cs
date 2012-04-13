@@ -25,7 +25,6 @@ namespace Calculator
         public bool HasFinalOperator()
         {
             bool result = false;
-
             foreach (char op in Operators)
             {
                 if (_equation.EndsWith(op.ToString()))
@@ -34,31 +33,26 @@ namespace Calculator
                     break;
                 }
             }
-
             return result;
         }
 
         public bool IsValid()
         {
             bool result = false;
-
             // Ensure the equation uses at least one operator
             foreach (char op in Operators)
             {
                 result = result || _equation.Contains(op.ToString());
-
                 if (result)
                 {
                     break;
                 }
             }
-
             // If no operators were found, return false now--invalid equation
             if (!result)
             {
                 return false;
             }
-
             string pattern = @"(\d+[\+\*\-\\])+\d+";
             Regex valid = new Regex(pattern);
             Match m = valid.Match(_equation);
@@ -74,36 +68,30 @@ namespace Calculator
         {
             parse();
             double result = _values.Dequeue();
-
             while (_values.Count > 0)
             {
                 string op = _operators.Dequeue();
                 double value = _values.Dequeue();
                 Func<double, double, double> operation;
-
-                if ("+" == op)
-                {
+				switch (op)
+				{
+				case "+":
                     operation = add;
-                }
-                else if ("-" == op)
-                {
+					break;
+				case "-":
                     operation = subtract;
-                }
-                else if ("*" == op)
-                {
+					break;
+				case "*":
                     operation = multiply;
-                }
-                else if ("/" == op)
-                {
+					break;
+				case "/":
                     operation = divide;
-                }
-                else
-                {
+					break;
+				default:
 					string[] validOps = Operators.Select(curOp => curOp.ToString()).ToArray();
                     throw new ArgumentException("Invalid operation; only " +
                         string.Join(", ", validOps) + " are allowed");
-                }
-
+				}
                 result = operation.Invoke(result, value);
             }
 
@@ -126,7 +114,6 @@ namespace Calculator
             {
                 throw new DivideByZeroException();
             }
-
             return dividend / divisor;
         }
 
@@ -139,11 +126,9 @@ namespace Calculator
         {
             Regex numberRegex = new Regex(@"\d");
             string curValue = String.Empty;
-
             foreach (char c in _equation)
             {
                 string strChar = c.ToString();
-
                 if (numberRegex.Match(strChar).Success)
                 {
                     curValue += strChar;
@@ -159,7 +144,6 @@ namespace Calculator
                     curValue = String.Empty;
                 }
             }
-
             if (!string.IsNullOrEmpty(curValue))
             {
                 double value = Convert.ToDouble(curValue);
