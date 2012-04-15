@@ -9,7 +9,7 @@ namespace Calculator
 	{
 		private readonly string _equation;
 		public static List<char> Operators = new List<char> { '/', '+', '-',
-            '*', '.' };
+            '*', '.', '^' };
         
 		public Equation(string equation)
 		{
@@ -22,23 +22,21 @@ namespace Calculator
             {
                 return false;
             }
-			bool result = false;
 			foreach (char op in Operators) {
 				if (_equation.EndsWith(op.ToString())) {
-					result = true;
-					break;
+					return true;
 				}
 			}
-			return result;
+			return false;
 		}
 		
-		public string ReplaceFinalOperator(char newOp)
+		public string ReplaceFinalOperator(Symbol newOp)
 		{
             if (string.IsNullOrEmpty(_equation))
             {
                 return newOp.ToString();
             }
-			return _equation.TrimEnd(Operators.ToArray()) + newOp;
+			return _equation.TrimEnd(Operators.ToArray()) + newOp.ToString();
 		}
 
 		public override string ToString()

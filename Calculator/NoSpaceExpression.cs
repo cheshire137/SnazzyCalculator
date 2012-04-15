@@ -27,29 +27,21 @@ namespace Calculator
 			{
 				return null;
 			}
-			if (symbols.First() is OpenParenthesis &&
-			    symbols.Last() is ClosedParenthesis)
-			{
-				Expression e = Expression.Produce(symbols.Skip(1).SkipLast(1));
-				if (e != null)
-				{
-					return new NoSpaceExpression(new OpenParenthesis(), e,
-					                             new ClosedParenthesis());
-				}
-			}
+
 			// expression, infix-operator, expression
-			var z = symbols.Rollup(0, (t, d) =>
-			{
-				if (t is OpenParenthesis)
-				{
-					return d + 1;
-				}
-				if (t is ClosedParenthesis)
-				{
-					return d - 1;
-				}
-				return d;
-			});
+			var z = symbols.Rollup(0,
+                (t, d) => {
+    				if (t is OpenParenthesis)
+    				{
+    					return d + 1;
+    				}
+    				if (t is ClosedParenthesis)
+    				{
+    					return d - 1;
+    				}
+    				return d;
+    			}
+            );
 			var symbolsWithIndex = symbols.Select((s, i) => new
 			    {
 			        Symbol = s,
@@ -94,6 +86,18 @@ namespace Calculator
 					return new NoSpaceExpression(e1, io, e2);
 				}
 			}
+
+         if (symbols.First() is OpenParenthesis &&
+             symbols.Last() is ClosedParenthesis)
+         {
+             Expression e = Expression.Produce(symbols.Skip(1).SkipLast(1));
+             if (e != null)
+             {
+                 return new NoSpaceExpression(new OpenParenthesis(), e,
+                                              new ClosedParenthesis());
+             }
+         }
+
 			NumericalConstant n = NumericalConstant.Produce(symbols);
 			if (n != null)
 			{
