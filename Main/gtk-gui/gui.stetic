@@ -26,6 +26,7 @@
             <child>
               <widget class="Gtk.Button" id="buttonClear">
                 <property name="MemberName" />
+                <property name="HeightRequest">50</property>
                 <property name="CanFocus">True</property>
                 <property name="UseStock">True</property>
                 <property name="Type">StockItem</property>
@@ -41,23 +42,30 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+              <widget class="Gtk.Button" id="buttonBackspace">
                 <property name="MemberName" />
-                <property name="ShadowType">In</property>
-                <child>
-                  <widget class="Gtk.TextView" id="equationTextView">
-                    <property name="MemberName" />
-                    <property name="ShowScrollbars">True</property>
-                    <property name="Editable">False</property>
-                    <property name="CursorVisible">False</property>
-                    <property name="Text" translatable="yes">0</property>
-                    <property name="Justification">Right</property>
-                  </widget>
-                </child>
+                <property name="CanFocus">True</property>
+                <property name="UseStock">True</property>
+                <property name="Type">StockItem</property>
+                <property name="StockId">gtk-undo</property>
+                <signal name="Clicked" handler="OnButtonBackspaceClicked" />
+                <property name="label">gtk-undo</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.DrawingArea" id="equationArea">
+                <property name="MemberName" />
+                <signal name="ExposeEvent" handler="OnEquationAreaExposeEvent" />
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
               </packing>
             </child>
           </widget>

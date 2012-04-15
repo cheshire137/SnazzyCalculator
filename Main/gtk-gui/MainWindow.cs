@@ -6,8 +6,8 @@ public partial class MainWindow
 	private global::Gtk.VBox equationVbox;
 	private global::Gtk.HBox equationClearHbox;
 	private global::Gtk.Button buttonClear;
-	private global::Gtk.ScrolledWindow GtkScrolledWindow;
-	private global::Gtk.TextView equationTextView;
+	private global::Gtk.Button buttonBackspace;
+	private global::Gtk.DrawingArea equationArea;
 	private global::Gtk.VBox vbox2;
 	private global::Gtk.HBox hbox1;
 	private global::Gtk.Button button7;
@@ -50,6 +50,7 @@ public partial class MainWindow
 		this.equationClearHbox.Spacing = 6;
 		// Container child equationClearHbox.Gtk.Box+BoxChild
 		this.buttonClear = new global::Gtk.Button ();
+		this.buttonClear.HeightRequest = 50;
 		this.buttonClear.CanFocus = true;
 		this.buttonClear.Name = "buttonClear";
 		this.buttonClear.UseStock = true;
@@ -61,20 +62,23 @@ public partial class MainWindow
 		w1.Expand = false;
 		w1.Fill = false;
 		// Container child equationClearHbox.Gtk.Box+BoxChild
-		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
-		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
-		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
-		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-		this.equationTextView = new global::Gtk.TextView ();
-		this.equationTextView.Buffer.Text = "0";
-		this.equationTextView.Name = "equationTextView";
-		this.equationTextView.Editable = false;
-		this.equationTextView.CursorVisible = false;
-		this.equationTextView.Justification = ((global::Gtk.Justification)(1));
-		this.GtkScrolledWindow.Add (this.equationTextView);
-		this.equationClearHbox.Add (this.GtkScrolledWindow);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.GtkScrolledWindow]));
-		w3.Position = 1;
+		this.buttonBackspace = new global::Gtk.Button ();
+		this.buttonBackspace.CanFocus = true;
+		this.buttonBackspace.Name = "buttonBackspace";
+		this.buttonBackspace.UseStock = true;
+		this.buttonBackspace.UseUnderline = true;
+		this.buttonBackspace.Label = "gtk-undo";
+		this.equationClearHbox.Add (this.buttonBackspace);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.buttonBackspace]));
+		w2.Position = 1;
+		w2.Expand = false;
+		w2.Fill = false;
+		// Container child equationClearHbox.Gtk.Box+BoxChild
+		this.equationArea = new global::Gtk.DrawingArea ();
+		this.equationArea.Name = "equationArea";
+		this.equationClearHbox.Add (this.equationArea);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.equationArea]));
+		w3.Position = 2;
 		this.equationVbox.Add (this.equationClearHbox);
 		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.equationVbox [this.equationClearHbox]));
 		w4.Position = 0;
@@ -317,6 +321,8 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.buttonClear.Clicked += new global::System.EventHandler (this.OnButtonClearClicked);
+		this.buttonBackspace.Clicked += new global::System.EventHandler (this.OnButtonBackspaceClicked);
+		this.equationArea.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnEquationAreaExposeEvent);
 		this.button7.Clicked += new global::System.EventHandler (this.OnButton7Clicked);
 		this.button8.Clicked += new global::System.EventHandler (this.OnButton8Clicked);
 		this.button9.Clicked += new global::System.EventHandler (this.OnButton9Clicked);
