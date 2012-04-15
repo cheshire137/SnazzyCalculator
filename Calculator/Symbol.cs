@@ -45,15 +45,9 @@ namespace Calculator
 		
 		public String Inspect()
 		{
-			var sb = new StringBuilder();
-			sb.AppendLine(GetType().ToString());
-			foreach (Symbol sym in ConstituentSymbols)
-			{
-				sb.Append(sym.GetType().ToString())
-					.Append(" - ")
-					.AppendLine(sym.Inspect());
-			}
-			return sb.ToString();
+            var sb = new StringBuilder();
+            inspectRecursive(sb, this, 0);
+            return sb.ToString();
 		}
 
 		public override string ToString()
@@ -61,6 +55,19 @@ namespace Calculator
 			return ConstituentSymbols.Select(ct => ct.ToString())
 				.StringConcatenate();
 		}
+
+        private static void inspectRecursive(StringBuilder sb, Symbol symbol,
+                                             int depth)
+        {
+            sb.AppendLine(string.Format("{0}{1}: {2}",
+                "".PadRight(depth * 2),
+                symbol.GetType().Name,
+                symbol.ToString()));
+            foreach (var childSymbol in symbol.ConstituentSymbols)
+            {
+                inspectRecursive(sb, childSymbol, depth + 1);
+            }
+        }
 	}
 }
 

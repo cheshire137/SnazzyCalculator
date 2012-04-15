@@ -86,18 +86,16 @@ namespace Calculator
 					return new NoSpaceExpression(e1, io, e2);
 				}
 			}
-
-         if (symbols.First() is OpenParenthesis &&
-             symbols.Last() is ClosedParenthesis)
-         {
-             Expression e = Expression.Produce(symbols.Skip(1).SkipLast(1));
-             if (e != null)
-             {
-                 return new NoSpaceExpression(new OpenParenthesis(), e,
-                                              new ClosedParenthesis());
-             }
-         }
-
+            if (symbols.First() is OpenParenthesis &&
+                symbols.Last() is ClosedParenthesis)
+            {
+                Expression e = Expression.Produce(symbols.Skip(1).SkipLast(1));
+                if (e != null)
+                {
+                    return new NoSpaceExpression(new OpenParenthesis(), e,
+                        new ClosedParenthesis());
+                }
+            }
 			NumericalConstant n = NumericalConstant.Produce(symbols);
 			if (n != null)
 			{

@@ -7,11 +7,14 @@
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Main.exe" internal="true" />
+    <widget-library name="../../../../../../Applications/MonoDevelop.app/Contents/MacOS/lib/monodevelop/AddIns/MonoDevelop.GtkCore/libstetic.dll" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="406 534">
+  <widget class="Gtk.Window" id="MainWindow" design-size="460 534">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Snazzy Calculator</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
     <property name="DefaultWidth">500</property>
     <property name="DefaultHeight">480</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
@@ -25,6 +28,16 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
+              <widget class="Gtk.DrawingArea" id="equationArea">
+                <property name="MemberName" />
+                <signal name="ExposeEvent" handler="OnEquationAreaExposeEvent" />
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.Button" id="buttonBackspace">
                 <property name="MemberName" />
                 <property name="HeightRequest">75</property>
@@ -33,23 +46,14 @@
                 <property name="Type">StockItem</property>
                 <property name="StockId">gtk-undo</property>
                 <signal name="Clicked" handler="OnButtonBackspaceClicked" />
+                <signal name="ExposeEvent" handler="OnButtonBackspaceExposeEvent" />
                 <property name="label">gtk-undo</property>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.DrawingArea" id="equationArea">
-                <property name="MemberName" />
-                <signal name="ExposeEvent" handler="OnEquationAreaExposeEvent" />
               </widget>
               <packing>
                 <property name="Position">1</property>
                 <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
           </widget>
@@ -81,6 +85,7 @@
                         <property name="Label" translatable="yes">7</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton7Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton7ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -99,6 +104,7 @@
                         <property name="Label" translatable="yes">4</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton4Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton4ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -117,6 +123,7 @@
                         <property name="Label" translatable="yes">1</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton1Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton1ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -135,6 +142,7 @@
                         <property name="Label" translatable="yes">0</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton0Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton0ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="PackType">End</property>
@@ -166,6 +174,7 @@
                         <property name="Label" translatable="yes">8</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton8Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton8ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -184,6 +193,7 @@
                         <property name="Label" translatable="yes">5</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton5Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton5ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -202,6 +212,7 @@
                         <property name="Label" translatable="yes">2</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton2Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton2ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -220,6 +231,7 @@
                         <property name="Label" translatable="yes">.</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonDotClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonDotExposeEvent" />
                       </widget>
                       <packing>
                         <property name="PackType">End</property>
@@ -251,6 +263,7 @@
                         <property name="Label" translatable="yes">9</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton9Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton9ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -269,6 +282,7 @@
                         <property name="Label" translatable="yes">6</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton6Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton6ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -287,6 +301,7 @@
                         <property name="Label" translatable="yes">3</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButton3Clicked" />
+                        <signal name="ExposeEvent" handler="OnButton3ExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -304,6 +319,7 @@
                         <property name="Type">StockItem</property>
                         <property name="StockId">gtk-clear</property>
                         <signal name="Clicked" handler="OnButtonClearClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonClearExposeEvent" />
                         <property name="label">gtk-clear</property>
                       </widget>
                       <packing>
@@ -329,12 +345,14 @@
                     <child>
                       <widget class="Gtk.Button" id="buttonDivide">
                         <property name="MemberName" />
+                        <property name="WidthRequest">90</property>
                         <property name="HeightRequest">59</property>
                         <property name="CanFocus">True</property>
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">/</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonDivideClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonDivideExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -352,6 +370,7 @@
                         <property name="Label" translatable="yes">x</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonMultiplyClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonMultiplyExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -369,6 +388,7 @@
                         <property name="Label" translatable="yes">-</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonSubtractClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonSubtractExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -386,6 +406,7 @@
                         <property name="Label" translatable="yes">+</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonAddClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonAddExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">3</property>
@@ -402,6 +423,8 @@
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">^</property>
                         <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnButtonExponentClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonExponentExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">4</property>
@@ -436,11 +459,13 @@
                       <widget class="Gtk.Button" id="buttonOpenParenthesis">
                         <property name="MemberName" />
                         <property name="WidthRequest">90</property>
+                        <property name="HeightRequest">75</property>
                         <property name="CanFocus">True</property>
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">(</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonOpenParenthesisClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonOpenParenthesisExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -458,6 +483,7 @@
                         <property name="Label" translatable="yes">)</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonClosedParenthesisClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonClosedParenthesisExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -469,11 +495,14 @@
                     <child>
                       <widget class="Gtk.Button" id="buttonEquals">
                         <property name="MemberName" />
+                        <property name="CanDefault">True</property>
+                        <property name="HasDefault">True</property>
                         <property name="CanFocus">True</property>
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">=</property>
                         <property name="UseUnderline">True</property>
                         <signal name="Clicked" handler="OnButtonEqualsClicked" />
+                        <signal name="ExposeEvent" handler="OnButtonEqualsExposeEvent" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>

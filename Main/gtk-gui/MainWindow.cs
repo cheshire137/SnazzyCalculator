@@ -5,8 +5,8 @@ public partial class MainWindow
 {
 	private global::Gtk.VBox equationVbox;
 	private global::Gtk.HBox equationClearHbox;
-	private global::Gtk.Button buttonBackspace;
 	private global::Gtk.DrawingArea equationArea;
+	private global::Gtk.Button buttonBackspace;
 	private global::Gtk.VBox vbox2;
 	private global::Gtk.HBox hbox1;
 	private global::Gtk.VBox vbox6;
@@ -43,6 +43,8 @@ public partial class MainWindow
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString ("Snazzy Calculator");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+		this.Resizable = false;
+		this.AllowGrow = false;
 		this.DefaultWidth = 500;
 		this.DefaultHeight = 480;
 		// Container child MainWindow.Gtk.Container+ContainerChild
@@ -54,6 +56,12 @@ public partial class MainWindow
 		this.equationClearHbox.Name = "equationClearHbox";
 		this.equationClearHbox.Spacing = 6;
 		// Container child equationClearHbox.Gtk.Box+BoxChild
+		this.equationArea = new global::Gtk.DrawingArea ();
+		this.equationArea.Name = "equationArea";
+		this.equationClearHbox.Add (this.equationArea);
+		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.equationArea]));
+		w1.Position = 0;
+		// Container child equationClearHbox.Gtk.Box+BoxChild
 		this.buttonBackspace = new global::Gtk.Button ();
 		this.buttonBackspace.HeightRequest = 75;
 		this.buttonBackspace.CanFocus = true;
@@ -62,16 +70,10 @@ public partial class MainWindow
 		this.buttonBackspace.UseUnderline = true;
 		this.buttonBackspace.Label = "gtk-undo";
 		this.equationClearHbox.Add (this.buttonBackspace);
-		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.buttonBackspace]));
-		w1.Position = 0;
-		w1.Expand = false;
-		w1.Fill = false;
-		// Container child equationClearHbox.Gtk.Box+BoxChild
-		this.equationArea = new global::Gtk.DrawingArea ();
-		this.equationArea.Name = "equationArea";
-		this.equationClearHbox.Add (this.equationArea);
-		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.equationArea]));
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.equationClearHbox [this.buttonBackspace]));
 		w2.Position = 1;
+		w2.Expand = false;
+		w2.Fill = false;
 		this.equationVbox.Add (this.equationClearHbox);
 		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.equationVbox [this.equationClearHbox]));
 		w3.Position = 0;
@@ -275,6 +277,7 @@ public partial class MainWindow
 		this.vbox7.Spacing = 6;
 		// Container child vbox7.Gtk.Box+BoxChild
 		this.buttonDivide = new global::Gtk.Button ();
+		this.buttonDivide.WidthRequest = 90;
 		this.buttonDivide.HeightRequest = 59;
 		this.buttonDivide.CanFocus = true;
 		this.buttonDivide.Name = "buttonDivide";
@@ -352,6 +355,7 @@ public partial class MainWindow
 		// Container child hbox2.Gtk.Box+BoxChild
 		this.buttonOpenParenthesis = new global::Gtk.Button ();
 		this.buttonOpenParenthesis.WidthRequest = 90;
+		this.buttonOpenParenthesis.HeightRequest = 75;
 		this.buttonOpenParenthesis.CanFocus = true;
 		this.buttonOpenParenthesis.Name = "buttonOpenParenthesis";
 		this.buttonOpenParenthesis.UseUnderline = true;
@@ -375,6 +379,7 @@ public partial class MainWindow
 		w27.Fill = false;
 		// Container child hbox2.Gtk.Box+BoxChild
 		this.buttonEquals = new global::Gtk.Button ();
+		this.buttonEquals.CanDefault = true;
 		this.buttonEquals.CanFocus = true;
 		this.buttonEquals.Name = "buttonEquals";
 		this.buttonEquals.UseUnderline = true;
@@ -395,29 +400,52 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
+		this.buttonEquals.HasDefault = true;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.KeyReleaseEvent += new global::Gtk.KeyReleaseEventHandler (this.OnKeyReleaseEvent);
-		this.buttonBackspace.Clicked += new global::System.EventHandler (this.OnButtonBackspaceClicked);
 		this.equationArea.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnEquationAreaExposeEvent);
+		this.buttonBackspace.Clicked += new global::System.EventHandler (this.OnButtonBackspaceClicked);
+		this.buttonBackspace.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonBackspaceExposeEvent);
 		this.button7.Clicked += new global::System.EventHandler (this.OnButton7Clicked);
+		this.button7.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton7ExposeEvent);
 		this.button4.Clicked += new global::System.EventHandler (this.OnButton4Clicked);
+		this.button4.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton4ExposeEvent);
 		this.button1.Clicked += new global::System.EventHandler (this.OnButton1Clicked);
+		this.button1.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton1ExposeEvent);
 		this.button0.Clicked += new global::System.EventHandler (this.OnButton0Clicked);
+		this.button0.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton0ExposeEvent);
 		this.button8.Clicked += new global::System.EventHandler (this.OnButton8Clicked);
+		this.button8.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton8ExposeEvent);
 		this.button5.Clicked += new global::System.EventHandler (this.OnButton5Clicked);
+		this.button5.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton5ExposeEvent);
 		this.button2.Clicked += new global::System.EventHandler (this.OnButton2Clicked);
+		this.button2.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton2ExposeEvent);
 		this.buttonDot.Clicked += new global::System.EventHandler (this.OnButtonDotClicked);
+		this.buttonDot.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonDotExposeEvent);
 		this.button9.Clicked += new global::System.EventHandler (this.OnButton9Clicked);
+		this.button9.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton9ExposeEvent);
 		this.button6.Clicked += new global::System.EventHandler (this.OnButton6Clicked);
+		this.button6.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton6ExposeEvent);
 		this.button3.Clicked += new global::System.EventHandler (this.OnButton3Clicked);
+		this.button3.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButton3ExposeEvent);
 		this.buttonClear.Clicked += new global::System.EventHandler (this.OnButtonClearClicked);
+		this.buttonClear.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonClearExposeEvent);
 		this.buttonDivide.Clicked += new global::System.EventHandler (this.OnButtonDivideClicked);
+		this.buttonDivide.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonDivideExposeEvent);
 		this.buttonMultiply.Clicked += new global::System.EventHandler (this.OnButtonMultiplyClicked);
+		this.buttonMultiply.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonMultiplyExposeEvent);
 		this.buttonSubtract.Clicked += new global::System.EventHandler (this.OnButtonSubtractClicked);
+		this.buttonSubtract.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonSubtractExposeEvent);
 		this.buttonAdd.Clicked += new global::System.EventHandler (this.OnButtonAddClicked);
+		this.buttonAdd.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonAddExposeEvent);
+		this.buttonExponent.Clicked += new global::System.EventHandler (this.OnButtonExponentClicked);
+		this.buttonExponent.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonExponentExposeEvent);
 		this.buttonOpenParenthesis.Clicked += new global::System.EventHandler (this.OnButtonOpenParenthesisClicked);
+		this.buttonOpenParenthesis.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonOpenParenthesisExposeEvent);
 		this.buttonClosedParenthesis.Clicked += new global::System.EventHandler (this.OnButtonClosedParenthesisClicked);
+		this.buttonClosedParenthesis.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonClosedParenthesisExposeEvent);
 		this.buttonEquals.Clicked += new global::System.EventHandler (this.OnButtonEqualsClicked);
+		this.buttonEquals.ExposeEvent += new global::Gtk.ExposeEventHandler (this.OnButtonEqualsExposeEvent);
 	}
 }
