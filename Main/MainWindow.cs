@@ -94,7 +94,9 @@ public partial class MainWindow : Gtk.Window
 
 	protected void OnButtonEqualsClicked(object sender, System.EventArgs e)
 	{
-		var eq = new Equation(equationTextView.Buffer.Text);
+		Symbol sym = SimpleFormulaParser.ParseFormula(equationTextView.Buffer.Text);
+		equationTextView.Buffer.Text = sym.ToString();
+		/*var eq = new Equation(equationTextView.Buffer.Text);
 		if (eq.IsValid())
 		{
 			equationTextView.Buffer.Text = "" + eq.Solve();
@@ -102,7 +104,7 @@ public partial class MainWindow : Gtk.Window
 		else
 		{
 			equationTextView.Buffer.Text = ERROR_MESSAGE;
-		}
+		}*/
 	}
 
 	protected void OnButtonClearClicked(object sender, System.EventArgs e)

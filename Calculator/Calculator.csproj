@@ -40,6 +40,22 @@
   -->
   <ItemGroup>
     <Compile Include="Equation.cs" />
+    <Compile Include="Symbol.cs" />
+    <Compile Include="Formula.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="NoSpaceExpression.cs" />
+    <Compile Include="DecimalDigit.cs" />
+    <Compile Include="WhiteSpace.cs" />
+    <Compile Include="Plus.cs" />
+    <Compile Include="Minus.cs" />
+    <Compile Include="Asterisk.cs" />
+    <Compile Include="ForwardSlash.cs" />
+    <Compile Include="Caret.cs" />
+    <Compile Include="Period.cs" />
+    <Compile Include="OpenParenthesis.cs" />
+    <Compile Include="ClosedParenthesis.cs" />
+    <Compile Include="SimpleFormulaParser.cs" />
+    <Compile Include="ParserException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,5 +64,11 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{2EA3D357-B917-4808-90BC-13AD85AFB54A}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
