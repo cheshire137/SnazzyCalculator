@@ -15,6 +15,11 @@ namespace Calculator
 		public Formula(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			return ((Expression)ConstituentSymbols[0]).Solve();
+		}
 	}
 }
 

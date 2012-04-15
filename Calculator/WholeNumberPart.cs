@@ -11,7 +11,7 @@ namespace Calculator
 			// whole-number-part = digit-sequence
 			IEnumerable<Symbol> unprocessedSymbols = null;
 			DigitSequence d = DigitSequence.Produce(symbols,
-			                                        out unprocessedSymbols);
+				out unprocessedSymbols);
 			if (d != null)
 			{
 				symbolsToProcess = unprocessedSymbols;
@@ -23,6 +23,11 @@ namespace Calculator
 
 		public WholeNumberPart(params Object[] symbols) : base(symbols)
 		{
+		}
+		
+		public double Solve()
+		{
+			return ((DigitSequence)ConstituentSymbols[0]).Solve();
 		}
 	}
 }

@@ -47,10 +47,10 @@ namespace Calculator
 			}
 		}
 		
-		public static Symbol ParseFormula(string s)
+		public static Formula ParseFormula(string s)
 		{
 			IEnumerable<Symbol> symbols = s.Select(char2Symbol);
-			if (symbols.Any()) {
+			/*if (symbols.Any()) {
 				Console.WriteLine("Terminal Symbols");
 				Console.WriteLine("================");
 				foreach (Symbol terminal in symbols)
@@ -59,7 +59,7 @@ namespace Calculator
                         terminal.ToString());
 				}
 				Console.WriteLine();
-			}
+			}*/
 			Formula formula = Formula.Produce(symbols);
 			if (formula == null)
 			{

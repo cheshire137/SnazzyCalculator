@@ -35,6 +35,40 @@ namespace Calculator
 		public SignificandPart(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			int numSymbols = ConstituentSymbols.Count;
+			if (1 == numSymbols)
+			{
+				Symbol sym = ConstituentSymbols[0];
+				if (sym is WholeNumberPart)
+				{
+					return ((WholeNumberPart)sym).Solve();
+				}
+				else if (sym is FractionalPart)
+				{
+					return ((FractionalPart)sym).Solve();
+				}
+				else
+				{
+					throw new ParserException("Don't know how to solve " +
+					    "SignificandPart with no FractionalPart or " +
+					    "WholeNumberPart, but instead a " +
+					    sym.GetType().ToString());
+				}
+			}
+			if (2 != numSymbols)
+			{
+				throw new ParserException("Expected WholeNumberPart and " +
+				                          "FractionalPart, but have " +
+				                          numSymbols + " symbols");
+			}
+			// TODO: is this right?
+			var w = (WholeNumberPart)ConstituentSymbols[0];
+			var f = (FractionalPart)ConstituentSymbols[1];
+			return w.Solve() + f.Solve();
+		}
 	}
 }
 

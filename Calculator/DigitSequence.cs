@@ -24,6 +24,16 @@ namespace Calculator
 		public DigitSequence(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			string sequence = "";
+			foreach (Symbol sym in ConstituentSymbols)
+			{
+				sequence += ((DecimalDigit)sym).Solve();
+			}
+			return Double.Parse(sequence);
+		}
 	}
 }
 

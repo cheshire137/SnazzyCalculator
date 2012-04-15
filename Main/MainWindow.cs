@@ -94,17 +94,23 @@ public partial class MainWindow : Gtk.Window
 
 	protected void OnButtonEqualsClicked(object sender, System.EventArgs e)
 	{
-		Symbol sym = SimpleFormulaParser.ParseFormula(equationTextView.Buffer.Text);
-		equationTextView.Buffer.Text = sym.ToString();
-		/*var eq = new Equation(equationTextView.Buffer.Text);
-		if (eq.IsValid())
+		Formula formula = SimpleFormulaParser.ParseFormula(
+			equationTextView.Buffer.Text
+		);
+		//Console.WriteLine(sym.Inspect());
+		try
 		{
-			equationTextView.Buffer.Text = "" + eq.Solve();
+			equationTextView.Buffer.Text = "" + formula.Solve();
 		}
-		else
+		catch (ParserException ex)
 		{
 			equationTextView.Buffer.Text = ERROR_MESSAGE;
-		}*/
+			Console.WriteLine(ex.Message);
+		}
+		catch (DivideByZeroException ex)
+		{
+			equationTextView.Buffer.Text = ERROR_MESSAGE;
+		}
 	}
 
 	protected void OnButtonClearClicked(object sender, System.EventArgs e)

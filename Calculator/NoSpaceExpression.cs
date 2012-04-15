@@ -114,6 +114,32 @@ namespace Calculator
 		public NoSpaceExpression(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			int numSymbols = ConstituentSymbols.Count;
+			Symbol firstSym = ConstituentSymbols[0];
+			if (1 == numSymbols)
+			{
+				return ((NumericalConstant)firstSym).Solve();
+			}
+			Symbol secondSym = ConstituentSymbols[1];
+			if (2 == numSymbols)
+			{
+				return Double.Parse(
+					((PrefixOperator)firstSym).ToString() +
+					((Expression)secondSym).Solve()
+				);
+			}
+			Symbol thirdSym = ConstituentSymbols[2];
+			if (firstSym is Expression)
+			{
+				double term1 = ((Expression)firstSym).Solve();
+				double term2 = ((Expression)thirdSym).Solve();
+				return ((InfixOperator)secondSym).GetSolver().Invoke(term1, term2);
+			}
+			return ((Expression)secondSym).Solve();
+		}
 	}
 }
 

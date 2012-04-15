@@ -29,6 +29,12 @@ namespace Calculator
 		public Expression(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			Symbol sym = ConstituentSymbols.SkipWhile(s => s is WhiteSpace).First();
+			return ((NoSpaceExpression)sym).Solve();
+		}
 	}
 }
 

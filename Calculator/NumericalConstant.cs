@@ -29,6 +29,18 @@ namespace Calculator
 		public NumericalConstant(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			if (ConstituentSymbols.Count == 1)
+			{
+				return ((SignificandPart)ConstituentSymbols[0]).Solve();
+			}
+			return Double.Parse(
+				((NegativeSign)ConstituentSymbols[0]).ToString() +
+				((SignificandPart)ConstituentSymbols[1]).Solve()
+			);
+		}
 	}
 }
 

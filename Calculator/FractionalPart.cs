@@ -29,6 +29,13 @@ namespace Calculator
 		public FractionalPart(params Object[] symbols) : base(symbols)
 		{
 		}
+		
+		public double Solve()
+		{
+			return Double.Parse("0" +
+			    ((Period)ConstituentSymbols[0]).ToString() +
+			    ((DigitSequence)ConstituentSymbols[1]).Solve());
+		}
 	}
 }
 

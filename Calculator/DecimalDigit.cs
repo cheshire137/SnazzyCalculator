@@ -15,6 +15,11 @@ namespace Calculator
 		{
 			_charValue = c.ToString();
 		}
+		
+		public double Solve()
+		{
+			return Double.Parse(_charValue);
+		}
 	}
 }
 

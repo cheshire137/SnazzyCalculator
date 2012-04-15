@@ -39,7 +39,6 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="Equation.cs" />
     <Compile Include="Symbol.cs" />
     <Compile Include="Formula.cs" />
     <Compile Include="Expression.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="FractionalPart.cs" />
     <Compile Include="PrefixOperator.cs" />
     <Compile Include="InfixOperator.cs" />
+    <Compile Include="Equation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
