@@ -4,16 +4,16 @@ namespace Calculator
 {
 	public class DecimalDigit : Symbol
 	{
-		private string CharacterValue;
+		private string _charValue;
 
 		public override string ToString()
 		{
-			return CharacterValue;
+			return _charValue;
 		}
 
 		public DecimalDigit(char c)
 		{
-			CharacterValue = c.ToString();
+			_charValue = c.ToString();
 		}
 	}
 }

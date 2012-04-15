@@ -56,6 +56,14 @@
     <Compile Include="ClosedParenthesis.cs" />
     <Compile Include="SimpleFormulaParser.cs" />
     <Compile Include="ParserException.cs" />
+    <Compile Include="NumericalConstant.cs" />
+    <Compile Include="NegativeSign.cs" />
+    <Compile Include="SignificandPart.cs" />
+    <Compile Include="WholeNumberPart.cs" />
+    <Compile Include="DigitSequence.cs" />
+    <Compile Include="FractionalPart.cs" />
+    <Compile Include="PrefixOperator.cs" />
+    <Compile Include="InfixOperator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
