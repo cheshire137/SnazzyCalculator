@@ -24,8 +24,15 @@ namespace Main
 {
     public class WordulaTranslator
     {
-        public WordulaTranslator()
+        private readonly string _equation;
+
+        public WordulaTranslator(string equation)
         {
+            _equation = equation;
+        }
+
+        public string Translate() {
+            return '"' + _equation + '"';
         }
     }
 }

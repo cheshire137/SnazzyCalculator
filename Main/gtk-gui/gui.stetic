@@ -9,7 +9,7 @@
     <widget-library name="../bin/Debug/Main.exe" internal="true" />
     <widget-library name="../../../../../../Applications/MonoDevelop.app/Contents/MacOS/lib/monodevelop/AddIns/MonoDevelop.GtkCore/libstetic.dll" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="460 534">
+  <widget class="Gtk.Window" id="Main.MainWindow" design-size="460 534">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Snazzy Calculator</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -28,12 +28,28 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
+              <widget class="Gtk.CheckButton" id="wordModeCheckbox">
+                <property name="MemberName">wordModeCheckbox</property>
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes">Word?</property>
+                <property name="DrawIndicator">True</property>
+                <property name="HasLabel">True</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Toggled" handler="OnWordModeCheckboxToggled" />
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.DrawingArea" id="equationArea">
                 <property name="MemberName" />
                 <signal name="ExposeEvent" handler="OnEquationAreaExposeEvent" />
               </widget>
               <packing>
-                <property name="Position">0</property>
+                <property name="Position">1</property>
                 <property name="AutoSize">True</property>
               </packing>
             </child>
@@ -50,7 +66,7 @@
                 <property name="label">gtk-undo</property>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
