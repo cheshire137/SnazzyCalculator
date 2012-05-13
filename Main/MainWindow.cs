@@ -138,12 +138,11 @@ namespace Main
 
         private void solveEquation()
         {
-            try
-                {
+            try {
                 Formula formula = SimpleFormulaParser.ParseFormula(
-                _equationText
-            );
-                Console.WriteLine(formula.Inspect());
+                    _equationText
+                );
+                //Console.WriteLine(formula.Inspect());
                 changeEquationText("" + formula.Solve());
             } catch (ParserException ex)
             {
@@ -225,8 +224,11 @@ namespace Main
 
         private string translateEquation(string value)
         {
-            var translator = new WordulaTranslator(value);
-            return translator.Translate();
+            if (_wordulatorMode) {
+                var translator = new WordulaTranslator(value);
+                return translator.Translate();
+            }
+            return value;
         }
 
         private void changeEquationText(string value)
@@ -561,10 +563,8 @@ namespace Main
         protected void OnWordModeCheckboxToggled(object sender, System.EventArgs e)
         {
             _wordulatorMode = !_wordulatorMode;
-            Console.WriteLine("Toggling wordulator mode to "
-                          + (_wordulatorMode ? "ON" : "OFF"));
-            // TODO: translate existing formula to wordula
-            changeEquationText("0");
+            // Force it to update the translation
+            changeEquationText(_equationText);
         }
     }
 }
